@@ -203,7 +203,8 @@ const generatePackageJson = function(path, name) {
 			"grunt-env": "^0.4.4",
 			"grunt-nodemon": "^0.4.2",
 			"grunt-postcss": "^0.9.0",
-			nodemon: "^1.11.0"
+			nodemon: "^1.11.0",
+			"silent-lion": "^0.1.0"
 		}
 	};
 

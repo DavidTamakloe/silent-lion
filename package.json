@@ -1,6 +1,6 @@
 {
   "name": "silent-lion",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "An attempt to automate some of my express.js workflow",
   "main": "program.js",
   "bin": {
