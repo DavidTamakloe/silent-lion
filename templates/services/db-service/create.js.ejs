@@ -5,7 +5,7 @@ module.exports = async function(args) {
         {
             //put create fields Here
             //field: args.field
-            <%if (fields.length > 0){ %>
+            <%if (typeof fields !== "undefined"){ %>
             <% fields.forEach(function(field){ %>
             <%= field %> : args.<%= field %>,
             <% }) %>

@@ -225,6 +225,13 @@ function write(path, str, mode) {
 	console.log("   \x1b[36mcreate\x1b[0m : " + path);
 }
 
+const isDirectory = function functionName(source) {
+	return fs.lstatSync(source).isDirectory();
+};
+const getDirectories = function(source) {
+	return fs.readdirSync(source).map(name => path.join(source, name)).filter(isDirectory);
+};
+
 module.exports = {
 	around: around,
 	before: before,
@@ -240,6 +247,7 @@ module.exports = {
 	renamedOption: renamedOption,
 	warning: warning,
 	write: write,
+	getDirectories: getDirectories,
 	constants: {
 		MODE_0666: MODE_0666,
 		MODE_0755: MODE_0755

@@ -7,7 +7,7 @@ module.exports = async function(entityId, args) {
         {
             //put edit fields Here
             //field: args.field
-            <%if (fields.length > 0){ %>
+            <%if (typeof fields !== "undefined"){ %>
                 <% fields.forEach(function(field){ %>
                     <%= field %> : args.<%= field %>,
                 <% }) %>
