@@ -1,0 +1,18 @@
+const create = require("./create.js");
+const findAll = require("./find-all.js");
+const findById = require("./find-by-id.js");
+const edit = require("./edit.js");
+<% if (!noD){ %>
+const destroy = require("./destroy.js");
+<% } %>
+
+
+module.exports = {
+    create: create,
+    findAll: findAll,
+    findById: findById,
+    edit: edit,
+    <% if (!noD){ %>
+    destroy: destroy
+    <% } %>
+};

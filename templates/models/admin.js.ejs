@@ -1,0 +1,11 @@
+const Bookshelf = require("../config/bookshelf.js");
+
+const <%= modelName %> = Bookshelf.Model.extend({
+    tableName: "<%= tableName %>",
+    hasTimestamps: true,
+
+    //Put Associations Here
+
+});
+
+module.exports = Bookshelf.model("<%= modelName %>", <%= modelName %>);

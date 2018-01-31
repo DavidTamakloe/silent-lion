@@ -1,0 +1,10 @@
+exports.seed = function(knex, Promise) {
+	return knex("admins").insert({
+		first_name: "root",
+		last_name: "admin",
+		other_names: "",
+		email: "<%= initialAdminEmail %>",
+		password: "<%= hashedInitialAdminPassword %>",
+		access_level: "root",
+	});
+};

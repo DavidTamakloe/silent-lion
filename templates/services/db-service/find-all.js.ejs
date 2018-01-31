@@ -1,0 +1,7 @@
+const <%= modelName %> = require("../../../models/<%= entityName %>.js");
+
+module.exports = async function(withRelatedArray) {
+    return await <%= modelName %>.forge().fetchAll({
+        withRelated: withRelatedArray
+    });
+};

@@ -1,0 +1,18 @@
+const <%= modelName %> = require("../../../models/<%= entityName %>.js");
+
+module.exports = async function(entityId, args) {
+    return await <%= modelName %>.forge({
+        id: entityId
+    }).save(
+        {
+            //put edit fields Here
+            //field: args.field
+            <%if (fields.length > 0){ %>
+                <% fields.forEach(function(field){ %>
+                    <%= field %> : args.<%= field %>,
+                <% }) %>
+            <% } %>
+        },
+        { method: "update" }
+    );
+};

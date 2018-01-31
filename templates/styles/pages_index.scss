@@ -1,0 +1,6 @@
+/**
+This file imports every file in the pages folder. By doing this the base style file
+for this mini-application only needs to import this file to include all page styles.
+**/
+
+@import "./login";

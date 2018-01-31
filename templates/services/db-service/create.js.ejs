@@ -1,0 +1,16 @@
+const <%= modelName %>= require("../../../models/<%= entityName %>.js");
+
+module.exports = async function(args) {
+    return await <%= modelName %>.forge().save(
+        {
+            //put create fields Here
+            //field: args.field
+            <%if (fields.length > 0){ %>
+            <% fields.forEach(function(field){ %>
+            <%= field %> : args.<%= field %>,
+            <% }) %>
+            <% } %>
+        },
+        { method: "insert" }
+    );
+};
