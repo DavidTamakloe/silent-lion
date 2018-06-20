@@ -1,18 +1,19 @@
 const <%= modelName %> = require("../../../models/<%= entityName %>.js");
 
-module.exports = async function(entityId, args) {
-    return await <%= modelName %>.forge({
-        id: entityId
-    }).save(
-        {
-            //put edit fields Here
-            //field: args.field
-            <%if (typeof fields !== "undefined"){ %>
-                <% fields.forEach(function(field){ %>
-                    <%= field %> : args.<%= field %>,
-                <% }) %>
-            <% } %>
-        },
-        { method: "update" }
-    );
+module.exports =  function(entityId, args) {
+    return  <%= modelName %>.query()
+        .where({
+            id: entityId
+        }).patch(
+            {
+                //put edit fields Here
+                //field: args.field
+                <%if (typeof fields !== "undefined"){ %>
+                    <% fields.forEach(function(field){ %>
+                        <%= field %> : args.<%= field %>,
+                    <% }) %>
+                <% } %>
+            })
+        .returning("*")
+        .first();
 };

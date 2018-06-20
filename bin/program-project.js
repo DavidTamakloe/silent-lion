@@ -172,7 +172,6 @@ const generatePackageJson = function(path, name) {
 		dependencies: {
 			bcrypt: "^1.0.2",
 			"body-parser": "~1.18.2",
-			bookshelf: "^0.10.3",
 			"connect-flash": "^0.1.1",
 			"connect-mongo": "^1.3.2",
 			"cookie-parser": "~1.4.3",
@@ -184,6 +183,7 @@ const generatePackageJson = function(path, name) {
 			knex: "^0.12.6",
 			mongoose: "^4.10.7",
 			morgan: "~1.9.0",
+			objection: "^1.1.10",
 			pg: "^6.2.4",
 			"serve-favicon": "~2.4.5",
 			winston: "^2.3.1",
@@ -435,6 +435,7 @@ const generateModelsDirectory = function(path) {
 				adminTemplate.locals.modelName = "admin";
 				adminTemplate.locals.tableName = "admins";
 				utilities.write(path + "/models/admin.js", adminTemplate.render());
+				utilities.copyTemplate("models/base-model.js", path + "/models/base-model.js");
 				resolve();
 			});
 		} catch (err) {

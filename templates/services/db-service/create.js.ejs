@@ -1,7 +1,7 @@
 const <%= modelName %>= require("../../../models/<%= entityName %>.js");
 
-module.exports = async function(args) {
-    return await <%= modelName %>.forge().save(
+module.exports = function(args) {
+    return <%= modelName %>.query().insert(
         {
             //put create fields Here
             //field: args.field
@@ -10,7 +10,6 @@ module.exports = async function(args) {
             <%= field %> : args.<%= field %>,
             <% }) %>
             <% } %>
-        },
-        { method: "insert" }
+        }
     );
 };

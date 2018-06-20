@@ -1,5 +1,5 @@
 const <%= modelName %> = require("../../../models/<%= entityName %>.js");
 
-module.exports = async function(id){
-  return await <%= modelName %>.forge({id: id}).destroy();
+module.exports = function(id){
+  return <%= modelName %>.query().where({id: id}).del();
 };

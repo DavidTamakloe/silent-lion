@@ -81,48 +81,67 @@ app.use(function(req, res, next) {
 });
 
 /* error handlers */
+app.use(csrfTokenErrorHandler);
+app.use(jsonErrorHandler);
+app.use(htmlErrorHandler);
 
-// development error handler
-// will print stacktrace
-if (app.get("env") === "development") {
-	//eslint-disable-next-line
-	app.use(function(err, req, res, next) {
-		logger.error("error status: " + err.status);
-		res.status(err.status || 500);
-		if (err.status === 404) {
-			logger.error("requested url: " + req.originalUrl);
-			return res.render("errors/404", {
-				message: err.message,
-				error: err
-			});
-		}
-		logger.error("From ErrorHandler:", err);
-		res.render("errors/500", {
-			message: err.message,
-			error: err
-		});
-	});
-}
-
-// production error handler
-// no stacktraces leaked to user
-//eslint-disable-next-line
-app.use(function(err, req, res, next) {
-	logger.error("error status: " + err.status);
-
-	res.status(err.status || 500);
-	if (err.status === 404) {
-		logger.error("requested url: " + req.originalUrl);
-		return res.render("errors/404", {
-			message: "",
-			error: ""
-		});
-	}
-	logger.error("From ErrorHandler:", err);
-	res.render("errors/500", {
-		message: "",
-		error: ""
-	});
-});
 
 module.exports = app;
+
+
+
+/* Functions */
+
+//eslint-disable-next-line
+function attachCsrfToken(req, res, next) {
+	if (process.env.NODE_ENV !== "testing") {
+		res.locals.csrfToken = req.csrfToken();
+	} else {
+		res.locals.csrfToken = " ";
+	}
+	next();
+}
+
+//eslint-disable-next-line
+function csrfTokenErrorHandler(err, req, res, next) {
+	if (err.code !== "EBADCSRFTOKEN") return next(err);
+	//handle CSRF token errors here
+	res.status(403);
+	res.send("Session has expired or form has been tampered with");
+}
+
+//eslint-disable-next-line
+function jsonErrorHandler(err, req, res, next) {
+	if (req.get("Content-Type") === "application/json") {
+		let response = {
+			message: app.get("env") === "development" ? err.message : "",
+			error: app.get("env") === "development" ? err : ""
+		};
+		res.status(err.status || 500);
+		if (err.status === 404) {
+			logger.error("404 error. Requested url: " + req.originalUrl);
+			return res.status(404).json(response);
+		}
+		logger.error(`500 error. Message: ${err.message}`);
+		logger.debug("From ErrorHandler:", err);
+		res.status(500).json(response);
+	} else {
+		next(err);
+	}
+}
+
+//eslint-disable-next-line
+function htmlErrorHandler(err, req, res, next) {
+	let renderLocals = {
+		message: app.get("env") === "development" ? err.message : "",
+		error: app.get("env") === "development" ? err : ""
+	};
+	res.status(err.status || 500);
+	if (err.status === 404) {
+		logger.error("404 error. Requested url: " + req.originalUrl);
+		return res.status(404).render("errors/404", renderLocals);
+	}
+	logger.error(`500 error. Message: ${err.message}`);
+	logger.debug("From ErrorHandler:", err);
+	res.status(500).render("errors/500", renderLocals);
+}

@@ -1,11 +1,15 @@
-const Bookshelf = require("../config/bookshelf.js");
+const BaseModel = require("./base-model");
 
-const <%= modelName %> = Bookshelf.Model.extend({
-    tableName: "<%= tableName %>",
-    hasTimestamps: true,
+class <%= modelName %> extends BaseModel {
+	static get tableName() {
+		return "<%= tableName %>";
+	}
 
-    //Put Associations Here
+    // static get relationMappings() {
+    // 	return {
+    // 		//Put relations here
+    // 	};
+    // }
+}
 
-});
-
-module.exports = Bookshelf.model("<%= modelName %>", <%= modelName %>);
+module.exports = <%= modelName %>;

@@ -1,7 +1,7 @@
 const <%= modelName %> = require("../../../models/<%= entityName %>.js");
 
-module.exports = async function(entityId, withRelatedArray) {
-    return await <%= modelName %>.forge({
+module.exports = function(entityId, relationString="") {
+    return <%= modelName %>.query().where({
         id: entityId
-    }).fetch({ withRelated: withRelatedArray });
+    }).eager(relationString).first();
 };
